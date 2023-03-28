@@ -1,60 +1,68 @@
+var input = document.querySelector("#texto");
 var container = document.querySelector("#container");
-var input = document.getElementById("texto");
 
 var list = [];
+var i = 0;
 
-list.push({
-    id:1,
-    texto:"No hay nada",
-    checkbox: false,
-    fechaCompletado: new Date,
-});
-
-list.push({
-    id:2,
-    texto:"No hay nada1",
-    checkbox: false,
-    fechaCompletado: new Date,
-});
-
-list.push({
-    id:3,
-    texto:"No hay nada2",
-    checkbox: true,
-    fechaCompletado: new Date,
-});
-
-function AgregarTodo()
-{
-    list.push
+function AgregarTodo(){
+    let txt = input.value;
+    let obj =
     {
-        
+        id: i,
+        texto: txt,
+        checkbox: false,
+        fechaCreación:  Date.now()
     }
+    list.push(obj)
+    MostrarTareas()
+    i++;
+    //list.reload();
 }
 
-/*var filter = list.filter(item => item.checkbox);
+var filter = list.filter(item => item.checkbox);
 
 console.log(list);
 
-list.map((item) => {
-    const {texto, checkbox} = item;
-    console.log(item)
-    container.innerHTML += `
-          <form action="" method="post">
-            <fieldset>
-                <input type="checkbox" value="${checkbox}">
-                <h1>${texto}</h1>
-            </fieldset>
-        </form>
 
-          </div>
-      `;
-    console.log(checkbox)
-});*/
+function MostrarTareas(){
+
+    container. innerHTML = "";
+    list.map((item) => {
+        const {texto, checkbox, id} = item;
+        console.log(item)
+        container.innerHTML+= `
+        <div>
+            <input type="checkbox" class="form-check.input ma-2" onchange="ComprobarCheckbox(${id})">
+            <label id="tachar" class="">${texto}</label>
+        </div>
+        `;
+        console.log(checkbox)
+    });
+    
+}
+
+function ComprobarCheckbox(id)
+{
+    let tachado = document.querySelector("#tachar")
+    if (list[id].checkbox == false)
+    {
+        list[id].checkbox = true
+        tachado.style.textDecoration = "line-through";
+    } 
+    else
+    {
+        list[id].checkbox = false
+        tachado.style.textDecoration = "none";
+    }
+
+
+}
 
 input.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
       event.preventDefault();
       document.getElementById("boton").click();
     }
-  });
+});
+
+
