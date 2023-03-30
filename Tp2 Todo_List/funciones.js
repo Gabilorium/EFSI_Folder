@@ -11,7 +11,8 @@ function AgregarTodo(){
         id: i,
         texto: txt,
         checkbox: false,
-        fechaCreación:  Date.now()
+        fechaCreación:  Date.now(),
+        fecharealización: null
     }
     list.push(obj)
     MostrarTareas()
@@ -26,36 +27,66 @@ console.log(list);
 
 function MostrarTareas(){
 
-    container. innerHTML = "";
+    container.innerHTML = "";
     list.map((item) => {
         const {texto, checkbox, id} = item;
         console.log(item)
+        if(checkbox == true)
         container.innerHTML+= `
-        <div>
-            <input type="checkbox" class="form-check.input ma-2" onchange="ComprobarCheckbox(${id})">
-            <label id="tachar" class="">${texto}</label>
-        </div>
-        `;
+            <div class="list-group-item d-flex align-items-center border-0 mb-2 rounded li" style="background-color: #f4f6f7;">
+                <input type="checkbox" checked class=" form-check-input " onchange="ComprobarCheckbox(${id})">
+                <label id="${id}" class="tachado textoTarea">${texto}</label>
+                <button id="boton" onclick="Eliminar(${id})" class="btn btn-danger marginado">Eliminar</button>
+            </div>
+            `;
+           
+        else
+        {
+            container.innerHTML+= `
+            <div class="list-group-item d-flex align-items-center border-0 mb-2 rounded li" style="background-color: #f4f6f7;">
+                <input type="checkbox" class="tachado form-check-input" onchange="ComprobarCheckbox(${id})">
+                <label id="${id}" class="textoTarea">${texto}</label>
+                <button id="boton" conclick="Eliminar(${id})" class="btn btn-danger marginado">Eliminar</button>
+            </div>
+            `;
+        }
         console.log(checkbox)
+        console.log(item.fechaCreación)
+        console.log(item.fecharealización)
     });
     
 }
 
 function ComprobarCheckbox(id)
 {
-    let tachado = document.querySelector("#tachar")
-    if (list[id].checkbox == false)
+    let tachado = document.getElementById(id)
+    console.log(tachado)
+    if (list[id].checkbox == true)
     {
-        list[id].checkbox = true
-        tachado.style.textDecoration = "line-through";
+        tachado.classList.toggle("tachado");
+        list[id].fecharealización = null;
+        list[id].checkbox = false;
     } 
     else
     {
-        list[id].checkbox = false
-        tachado.style.textDecoration = "none";
+        tachado.classList.toggle("tachado");
+        list[id].fecharealización = Date.now();
+        list[id].checkbox = true;
     }
-
-
+    /*let elemento= list.filter(tarea => tarea.id==id);
+    if(elemento.checkbox == false)
+    {
+        
+        elemento.checkbox = true;
+        elemento.fecharealización = Date.now();
+    }
+    else
+    {
+        
+        elemento.checkbox = false;
+        elemento.fecharealización = null;
+    }*/
+    
 }
 
 input.addEventListener("keypress", function(event) {
@@ -65,4 +96,31 @@ input.addEventListener("keypress", function(event) {
     }
 });
 
+function Eliminar(id){
+    //list[id]
+}
 
+function TiempoMenor(){
+    let tiempoMenor = 999999999;
+    let indiceAux;
+    let tareaMenos;
+    let resta;
+    let container = document.querySelector("#todorapido")
+    for (let i = 0; i < list.length; i++) {
+        console.log(list[i].fechaCreación)
+        console.log(list[i].fecharealización)
+        resta = list[i].fecharealización - list[i].fechaCreación
+        if(resta < tiempoMenor & list[i].fecharealización !=null)
+        {
+            indiceAux=i
+            tiempoMenor = resta;
+            tareaMenos = list[indiceAux].texto
+        }
+        console.log(resta)
+        console.log(tareaMenos)
+        container.innerHTML = `La tarea que menos tardaste en realizar fue: ${tareaMenos}`
+    }
+    //console.log(list.fechaCreación)
+    //console.log(list.fecharealización)
+    
+}
