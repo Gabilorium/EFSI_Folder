@@ -30,7 +30,6 @@ function MostrarTareas(){
     container.innerHTML = "";
     list.map((item) => {
         const {texto, checkbox, id} = item;
-        console.log(item)
         if(checkbox == true)
         container.innerHTML+= `
             <div class="list-group-item d-flex align-items-center border-0 mb-2 rounded li" style="background-color: #f4f6f7;">
@@ -50,9 +49,6 @@ function MostrarTareas(){
             </div>
             `;
         }
-        console.log(checkbox)
-        console.log(item.fechaCreación)
-        console.log(item.fecharealización)
     });
     
 }
@@ -73,20 +69,6 @@ function ComprobarCheckbox(id)
         list[id].fecharealización = Date.now();
         list[id].checkbox = true;
     }
-    /*let elemento= list.filter(tarea => tarea.id==id);
-    if(elemento.checkbox == false)
-    {
-        
-        elemento.checkbox = true;
-        elemento.fecharealización = Date.now();
-    }
-    else
-    {
-        
-        elemento.checkbox = false;
-        elemento.fecharealización = null;
-    }*/
-    
 }
 
 input.addEventListener("keypress", function(event) {
@@ -107,8 +89,6 @@ function TiempoMenor(){
     let resta;
     let container = document.querySelector("#todorapido")
     for (let i = 0; i < list.length; i++) {
-        console.log(list[i].fechaCreación)
-        console.log(list[i].fecharealización)
         resta = list[i].fecharealización - list[i].fechaCreación
         if(resta < tiempoMenor & list[i].fecharealización !=null)
         {
@@ -116,11 +96,6 @@ function TiempoMenor(){
             tiempoMenor = resta;
             tareaMenos = list[indiceAux].texto
         }
-        console.log(resta)
-        console.log(tareaMenos)
         container.innerHTML = `La tarea que menos tardaste en realizar fue: ${tareaMenos}`
     }
-    //console.log(list.fechaCreación)
-    //console.log(list.fecharealización)
-    
 }
