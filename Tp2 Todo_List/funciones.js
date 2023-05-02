@@ -45,7 +45,7 @@ function MostrarTareas(){
             <div class="list-group-item d-flex align-items-center border-0 mb-2 rounded li" style="background-color: #f4f6f7;">
                 <input type="checkbox" class="tachado form-check-input" onchange="ComprobarCheckbox(${id})">
                 <label id="${id}" class="textoTarea">${texto}</label>
-                <button id="boton" conclick="Eliminar(${id})" class="btn btn-danger marginado">Eliminar</button>
+                <button id="boton" onclick="Eliminar(${id})" class="btn btn-danger marginado">Eliminar</button>
             </div>
             `;
         }
@@ -79,7 +79,9 @@ input.addEventListener("keypress", function(event) {
 });
 
 function Eliminar(id){
-    //list[id]
+    let nuevaLista = list.filter(todo => todo.id != id);
+    list = nuevaLista;
+    MostrarTareas();
 }
 
 function TiempoMenor(){
